@@ -27,28 +27,30 @@
 ]; %>
 
 <header class="header">
-    <div class="address-box">
-        <p class="address-box__heading">nearest salon <i class="address-box__arrow arrow _down"></i></p>
-        <p class="address-box__address">lorem ipsum 234651</p>
+    <div class="header-top">
+        <div class="address-box">
+            <p class="address-box__heading">nearest salon <img src="img/ico_dropdown.svg" alt="" class="address-box__dropdown"></p>
+            <p class="address-box__address">lorem ipsum 234651</p>
+        </div>
+        <label class="menu-hidden">
+            <input type="checkbox" class="menu-hidden__check-box">
+            <img src="img/ico_hidden-menu.svg" alt="hidden-menu-icon" class="menu-hidden__icon">
+        </label>
+        <div class="logo-box">
+            <img src="img/logo.svg" alt="" class="logo">
+        </div>
+        <form action="#" class="search">
+            <input class="search__field" type="search" placeholder="Search...">
+            <input class="search__btn" type="image" src="img/ico_search.svg">
+        </form>
     </div>
-    <label class="menu-hidden">
-        <input type="checkbox" class="menu-hidden__check-box">
-        <img src="img/ico_hidden-menu.svg" alt="hidden-menu-icon" class="menu-hidden__icon">
-    </label>
-    <div class="logo-box">
-        <img src="img/logo.svg" alt="" class="logo">
-    </div>
-    <form action="#" class="search">
-        <input class="search__field" type="search" placeholder="Search...">
-        <input class="search__btn" type="image" src="img/ico_search.svg">
-    </form>
+    <div class="header-bottom">
 
-    <div class="menu">
-        <ul class="menu__list row">
+        <menu class="menu row">
             <% menuItems.forEach(item => { %>
                 <li class="menu__item"><a class="menu__link" href="<%= item.link; %>"><%= item.title %></a></li>
             <% }) %>
-        </ul>
+        </menu>
     </div>
 </header>
 
@@ -115,7 +117,7 @@
                     <i data-direction="right" class="slider__arrow arrow _right _available"></i>
                     <div class="slider__videos">
                         <ul class="slider__list"><%item.id.forEach(id => {%>
-                            <li class="col-4 slider__list-item">
+                            <li class="slider__list-item">
                                 <div class="video-box">
                                     <a data-fancybox href="https://youtu.be/<%=id;%>">
                                         <img src="https://img.youtube.com/vi/<%=id;%>/maxresdefault.jpg" alt="" class="video-box__preview">
@@ -132,24 +134,6 @@
     </div>
 </section>
 <footer class="footer clear-fix">
-    <%
-        const footerNavItems = [
-            {title: 'privacy policy', link: '#'},
-            {title: 'terms of use', link: '#'},
-            {title: 'contact us', link: '#'},
-            {title: 'newsletter', link: '#'},
-            {title: 'sitemap', link: '#'}
-            ]
-    %>
-    <div class="footer__nav footer__item">
-        <ul class="footer__nav-list">
-            <% footerNavItems.forEach( item => {%>
-                <li class="footer__nav-item">
-                    <a href="<%=item.link%>" class="footer__link"><%=item.title%></a>
-                </li>
-            <%})%>
-        </ul>
-    </div>
     <%
     const footerContactItems = [
         {path: 'img/ico_facebook.svg', link: '#'},
@@ -173,6 +157,24 @@
     <div class="footer__location footer__item">
         <p>location: <span class="footer__location-value">united state</span></p>
         <p>language: <span class="footer__location-value">english</span></p>
+    </div>
+    <%
+        const footerNavItems = [
+            {title: 'privacy policy', link: '#'},
+            {title: 'terms of use', link: '#'},
+            {title: 'contact us', link: '#'},
+            {title: 'newsletter', link: '#'},
+            {title: 'sitemap', link: '#'}
+            ]
+    %>
+    <div class="footer__nav footer__item">
+        <ul class="footer__nav-list">
+            <% footerNavItems.forEach( item => {%>
+                <li class="footer__nav-item">
+                    <a href="<%=item.link%>" class="footer__link"><%=item.title%></a>
+                </li>
+            <%})%>
+        </ul>
     </div>
 </footer>
 

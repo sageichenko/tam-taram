@@ -1,25 +1,53 @@
+//import debounce from './modules/debounce';
+
+function debounce(func, ms) {
+    let timer = null;
+
+    return function () {
+        if (timer) {
+            clearTimeout(timer);
+        }
+        timer = setTimeout(() => {
+            timer = null;
+            func(...[].slice.call(arguments));
+        }, ms)
+    }
+}
+
 class Slider {
     constructor($slider) {
         this.el = $slider;
-        this._list = $slider.querySelector('.slider__list');
         this._pos = 0;
-        this._sliderWidth = $slider.offsetWidth;
-        this._itemQty = this._list.childElementCount;
-        this._itemWidth = $slider.querySelector('.slider__list-item').offsetWidth;
-        //this._visibleItemQty =
-        this._offset = (this._sliderWidth - 3 * this._itemWidth) / 2;
-        this._scrollWidth = this._sliderWidth + this._offset + 9;
-        this._minPos = -(Math.floor((this._itemQty - 3) / 3)) * this._scrollWidth - this._itemQty % 3 * (this._itemWidth + this._offset);
-
+        this._initValues();
         this.toggleAvailableMod(this.el);
+        this._initEvents();
 
-        $slider.addEventListener('click', event => {
+    }
+
+    _initEvents() {
+        this.el.addEventListener('click', event => {
             const $target = event.target;
-            if ($target.classList.contains('arrow')) {
+            if ($target.classList.contains('arrow') && $target.classList.contains('_available')) {
                 this.slide($target.getAttribute('data-direction'), this._list);
                 this.toggleAvailableMod(this.el);
             }
         });
+
+        window.addEventListener('resize', debounce(this._initValues.bind(this), 1000));
+    }
+
+    _initValues() {
+        this._list = this.el.querySelector('.slider__list');
+        this._sliderWidth = this.el.offsetWidth;
+        console.log(this._sliderWidth);
+        this._itemQty = this._list.childElementCount;
+        this._itemWidth = this.el.querySelector('.slider__list-item').offsetWidth;
+        this._offset = this.el.querySelectorAll('.slider__list-item')[1].offsetLeft - this.el.querySelectorAll('.slider__list-item')[0].offsetLeft - this._itemWidth; //(this._sliderWidth - this._visibleItemQty * this._itemWidth) / (this._visibleItemQty - 1);
+        this._visibleItemQty = Math.ceil((this._sliderWidth + this._offset) / (this._itemWidth + this._offset));
+        console.log(this._visibleItemQty);
+        this._scrollWidth = this._sliderWidth + this._offset;
+        this._minPos = -Math.floor(this._itemQty * this._itemWidth + (this._itemQty - 1) * this._offset - this._sliderWidth);  //-(Math.floor((this._itemQty - this._visibleItemQty) / this._visibleItemQty)) * this._scrollWidth - this._itemQty % this._visibleItemQty * (this._itemWidth + this._offset);
+
     }
 
     changePosRight() {
@@ -63,11 +91,13 @@ class Slider {
 
     }
 }
+/*-----------------------------------------------------------------------------------------------------------------------*/
 
 document.addEventListener('DOMContentLoaded', function () {
     const sliders = [].map.call(document.getElementById('gallery').querySelectorAll('.slider'), item => {
         return new Slider(item);
     });
 });
+
 
 

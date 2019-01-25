@@ -1,10 +1,12 @@
 @import 'media';
 /*  VARIABLES  */
-@offset-horizontal: 6rem;
+@offset-horizontal: 1.5rem;
 @offset-vertical: 8rem;
 @offset-vertical-small: 6rem;
 
-@grid-width: 102rem;
+@grid-width: 112rem;
+@grid-padding: 5rem;
+@grid-padding-big: 6rem;
 @col-1-width: ~'calc((100% - 11 * @{offset-horizontal}) / 12)';
 
 @color-primary: #5022c8;
@@ -35,9 +37,9 @@ body {
 
 /*  GRID  */
 .row {
-    max-width: 95%;
-    margin: 0 auto;
-    //padding: 0 5rem;
+    //width: 95%;
+    padding: 0 @grid-padding;
+    margin: 0;
 
     &:not(:last-child) {
         margin-bottom: @offset-vertical-small;
@@ -45,6 +47,8 @@ body {
 
     @media @desktop {
         max-width: @grid-width;
+        padding: 0 @grid-padding-big;
+        margin: 0 auto;
     }
 }
 
@@ -109,15 +113,21 @@ total 12 columns
 }
 
 .header {
-    background-color: @color-primary;
-    height: 7rem;
+    height: 12rem;
     color: @color-white;
-    position: relative;
     text-align: center;
+}
 
-    @media @desktop {
-        //padding: 2rem 4rem;
-    }
+.header-top {
+    position: relative;
+    background-color: @color-primary;
+}
+
+.header-bottom {
+    position: relative;
+    height: 5rem;
+    background: @color-grey-dark;
+    z-index: -1;
 }
 
 .address-box {
@@ -130,7 +140,6 @@ total 12 columns
     bottom: -6rem;
     left: 0;
     padding: 1rem;
-    z-index: 10;
 
     &__heading {
         text-transform: uppercase;
@@ -141,16 +150,14 @@ total 12 columns
         text-transform: capitalize;
     }
 
-    &__arrow {
-        border-color: @color-white;
-        padding: .3rem;
-        border-width: 0 .2rem .2rem 0;
+    &__dropdown {
+        height: .7rem;
         cursor: pointer;
     }
 
     @media @tablet {
-        bottom: 0;
-        padding: 2rem 4rem;
+        top: 0;
+        padding: 2rem 3rem;
     }
 }
 
@@ -159,10 +166,6 @@ total 12 columns
     height: 5.5rem;
     display: inline-block;
     padding: 2rem 0;
-    /*position: absolute;
-    top: 25%;
-    left: 50%;
-    transform: translate(-50%, -25%);*/
 
     @media @tablet {
         height: 6rem;
@@ -183,9 +186,8 @@ total 12 columns
     display: inline-flex;
     align-items: center;
     position: absolute;
-    bottom: -4rem;
+    bottom: -5rem;
     right: 0;
-    z-index: 10;
 
     &__field {
         display: inline-block;
@@ -206,7 +208,7 @@ total 12 columns
             height: 0;
 
             &:focus {
-                transform: scale(1.1);
+                transform: scaleY(1.05);
             }
         }
     }
@@ -229,37 +231,33 @@ total 12 columns
     }
 
     @media @tablet {
-        bottom: 0;
-        padding: 0 4rem;
+        top: 0;
+        padding: 0 3rem;
         height: 7rem;
     }
 }
 
 .menu {
+    height: 5rem;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: @color-grey-dark;
     color: @color-grey-light;
     text-transform: uppercase;
     font-weight: 100;
     font-size: 1.6rem;
-    height: 5rem;
-    position: absolute;
-    bottom: -4rem;
-    left: 0;
-    right: 0;
+    display: none;
+    width: 100%;
+    line-height: 5rem;
+    justify-content: space-between;
+    @media @tablet-strict {
+        padding: 0 !important;
+    }
 
-    &__list {
-        display: none;
-        width: 100%;
-        line-height: 4rem;
-        justify-content: space-between;
-
-        @media @tablet-strict {
-            padding: 0 !important;
-        }
-
-        @media @tablet {
-            display: flex;
-        }
+    @media @tablet {
+        display: flex;
     }
 
     &__item {
@@ -294,26 +292,20 @@ total 12 columns
 }
 
 .menu-hidden {
-    /*position: absolute;
-    top: 50%;
-    transform: translateY(-50%);*/
-    display: inline-block;
+    float: left;
+    padding: 1.5rem;
 
     &__check-box {
-        //display: none;
+        display: none;
     }
 
     &__icon {
-        height: 4rem;
+        height: 3rem;
     }
 
     @media @tablet {
         display: none;
     }
-}
-
-.menu-hidden__check-box:checked~.menu__list {
-    display: inline-block;
 }
 
 .bread-crumbs {
@@ -356,10 +348,10 @@ total 12 columns
 }
 
 .content {
-    padding: 1rem;
+    padding: 0rem;
 
     @media @tablet {
-        padding: 4rem;
+        //padding: 4rem;
     }
     @media @desktop {
         padding: 2rem 0;
@@ -448,14 +440,14 @@ total 12 columns
     &__list-item {
         display: inline-block;
         text-decoration: none;
-        width: ~'calc((@{grid-width} - @{offset-horizontal}) / 2)';
+        width: ~'calc((@{grid-width} - 2 * @{grid-padding} - @{offset-horizontal}) / 2)';
 
         &:not(:last-child) {
             margin-right: @offset-horizontal;
         }
 
-        @media @desktop {
-            width: ~'calc((@{grid-width} - 2 * @{offset-horizontal}) / 3)';
+        @media @large {
+            width: ~'calc((@{grid-width} - 2 * @{grid-padding-big} - 2 * @{offset-horizontal}) / 3)';
         }
     }
 
@@ -467,18 +459,18 @@ total 12 columns
         transition: all .2s;
 
         &._left {
-            left: -4rem;
+            left: -3rem;
 
             @media @desktop {
-                left: -5rem;
+                left: -4rem;
             }
         }
 
         &._right {
-            right: -4rem;
+            right: -3rem;
 
             @media @desktop {
-                right: -5rem;
+                right: -4rem;
             }
         }
 
@@ -503,11 +495,15 @@ total 12 columns
 .footer {
     background-color: @color-grey-dark;
     color: @color-grey-light;
-    padding: 2rem 4rem;
+    padding: 3rem 2rem 10rem;
     font-size: 1.1rem;
     text-transform: uppercase;
     position: relative;
     font-weight: 200;
+
+    @media @tablet {
+        padding: 2rem 4rem;
+    }
 
     &__link,
     &__link:link,
@@ -517,7 +513,7 @@ total 12 columns
     }
 
     &__item {
-        display: inline-block;
+        margin-bottom: 3rem;
     }
 
     &__nav {
@@ -538,13 +534,19 @@ total 12 columns
             background-color: @color-black;
             cursor: pointer;
         }
+
+        @media @tablet {
+
+        }
     }
 
     &__contacts {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        @media @tablet {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
     }
 
     &__contact-list {
@@ -553,9 +555,14 @@ total 12 columns
 
     &__contact-item {
         display: inline-block;
-        height: 3rem;
-        width: 3rem;
-        margin: 0 1.5rem;
+        height: 2.5rem;
+        width: 2.5rem;
+        margin: 1rem 2rem 1rem 0;
+        @media @tablet {
+            margin: 1.5rem;
+            height: 3rem;
+            width: 3rem;
+        }
     }
 
     &__icon {
@@ -564,8 +571,12 @@ total 12 columns
     }
 
     &__location {
-        text-align: right;
-        float: right;
+        padding: .5rem;
+        text-align: left;
+        @media @tablet {
+            float: right;
+            text-align: right;
+        }
     }
 
     &__location-value {

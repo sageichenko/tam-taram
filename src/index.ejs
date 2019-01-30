@@ -71,7 +71,7 @@
         <div class="video-box">
             <a data-fancybox href="https://youtu.be/z8M0Fa1JVco">
                 <img src="https://img.youtube.com/vi/z8M0Fa1JVco/maxresdefault.jpg" alt="" class="video-box__preview">
-                <div class="video-box__btn-play"></div>
+                <div class="video-box__btn-play _small"><img src="img/play-button.png" alt="play-button"></div>
             </a>
         </div>
         <p class="main-video__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, asperiores aspernatur consequatur dolorum error illum maiores minus neque nesciunt non placeat porro quasi recusandae sapiente sint vero voluptate voluptatibus. Aut deserunt earum facere, minima modi nisi perspiciatis qui vitae voluptas.</p>
@@ -113,23 +113,17 @@
             <div class="row">
                 <h2 class="heading-secondary"><%=item.title%></h2>
                 <div class="slider">
-                    <i data-direction="left" class="slider__arrow arrow _left  _available"></i>
-                    <i data-direction="right" class="slider__arrow arrow _right _available"></i>
-                    <div class="slider__videos">
-                        <ul class="slider__list"><%item.id.forEach(id => {%>
-                            <li class="slider__list-item">
-                                <div class="video-box">
-                                    <a data-fancybox href="https://youtu.be/<%=id;%>">
-                                        <img src="https://img.youtube.com/vi/<%=id;%>/maxresdefault.jpg" alt="" class="video-box__preview">
-                                        <div class="video-box__btn-play _small"></div>
-                                    </a>
-                                </div>
-                            </li>
-                            <%}) %>
-                        </ul>
-                    </div>
+                    <%item.id.forEach(id => {%>
+                        <div class="video-box slider__item">
+                            <a data-fancybox href="https://youtu.be/<%=id;%>">
+                                <img src="https://img.youtube.com/vi/<%=id;%>/maxresdefault.jpg" alt="" class="video-box__preview">
+                                <div class="video-box__btn-play _small"><img src="img/play-button.png" alt="play-button"></div>
+                            </a>
+                        </div>
+                    <%})%>
                 </div>
             </div>
+        <button class="load-btn">load more</button>
             <%})%>
     </div>
 </section>
@@ -148,7 +142,7 @@
             <% footerContactItems.forEach( item => {%>
             <li class="footer__contact-item">
                 <a href="<%=item.link%>" class="footer__link">
-                    <img class="footer__icon" src="<%=item.path%>" alt="">
+                    <div class="footer__icon-wrap"><%- include(`${item.path}`)%></div>
                 </a>
             </li>
             <%})%>

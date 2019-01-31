@@ -1,84 +1,63 @@
-//import debounce from './modules/debounce';
-
-// function debounce(func, ms) {
-//     let timer = null;
-//
-//     return function () {
-//         if (timer) {
-//             clearTimeout(timer);
-//         }
-//         timer = setTimeout(() => {
-//             timer = null;
-//             func(...[].slice.call(arguments));
-//         }, ms);
-//     };
-// }
-
-//const turningWidth = 425;
-
 document.addEventListener('DOMContentLoaded', function () {
     initSlider('.slider');
+    const $checkBox = $('#menu-check-box')[0];
+    $checkBox.addEventListener('input', () => {
+        toggleMenu();
+    });
 });
 
 function initSlider(selector) {
     $(selector).slick({
         infinite: false,
-        slidesToShow: 1,
-        slidesToScroll: 1,
         mobileFirst: true,
-        rows: 3,
-        arrows: false,
-        vertical: true,
 
         responsive: [
             {
-                breakpoint: 1024,
+                breakpoint: 0,
                 settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    arrows: false,
+                    vertical: true,
+                    verticalSwiping: false,
+                    rows: 3,
                 }
             },
             {
-                breakpoint: 590,
+                breakpoint: 425,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,
-                    rows: 1,
                     arrows: true,
                     vertical: false,
+                    verticalSwiping: false,
+                    rows: 1,
                 }
-            }
+            },
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    arrows: true,
+                    vertical: false,
+                    verticalSwiping: false,
+                    rows: 1
+                }
+            },
+
         ]
     });
-    //window.addEventListener('resize', handlerScreenDecrease);
 }
 
-// function destroySlider(selector) {
-//     $(selector).slick('unslick');
-//     console.log('unslick');
-// }
-//
-// const handlerScreenDecrease = debounce( (ev) => {
-//     const window = ev.target;
-//     const width = window.innerWidth;
-//     if (width <= turningWidth) {
-//         destroySlider('.slider');
-//     }
-//
-//     window.removeEventListener(handlerScreenDecrease);
-//     window.addEventListener('resize', handlerScreenIncrease);
-// }, 1000);
-//
-// const handlerScreenIncrease = debounce ( (ev) => {
-//     const window = ev.target;
-//     const width = window.innerWidth;
-//     if (width >= turningWidth) {
-//         initSlider('.slider');
-//     }
-//
-//     window.removeEventListener(handlerScreenIncrease);
-//     window.addEventListener('resize', handlerScreenDecrease);
-// }, 1000);
+function toggleMenu () {
+    $('#menu')[0].classList.toggle('_hidden');
+}
 
+function openMenu () {
+    $('#menu')[0].classList.remove('_hidden');
+}
 
-
+function closeMenu () {
+    $('#menu')[0].classList.add('_hidden');
+}

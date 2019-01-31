@@ -5,7 +5,7 @@
 @offset-vertical-small: 4rem;
 
 @grid-width: 112rem;
-@grid-padding-small: 2rem;
+@grid-padding-small: 1rem;
 @grid-padding: 4rem;
 @grid-padding-big: 6rem;
 @col-1-width: ~'calc((100% - 11 * @{offset-horizontal}) / 12)';
@@ -38,15 +38,23 @@ body {
 
 /*  GRID  */
 .row {
-    margin: @offset-vertical 0 @offset-vertical-small;
+    margin: @offset-vertical-small 0;
 
-    //&:not(:last-child) {
-    //    margin-bottom: @offset-vertical-small;
-    //}
+    @media @tablet {
+        margin: 0 auto;
+
+        &:not(:last-child) {
+            margin-bottom: @offset-vertical-small;
+        }
+    }
 
     @media @desktop {
         max-width: @grid-width;
-        margin: @offset-vertical auto @offset-vertical-small;
+        margin: 0 auto;
+
+        &:not(:last-child) {
+            margin-bottom: @offset-vertical;
+        }
     }
 }
 
@@ -124,7 +132,6 @@ total 12 columns
     position: relative;
     height: 5rem;
     background: @color-grey-dark;
-    z-index: -1;
 }
 
 .address-box {
@@ -137,6 +144,7 @@ total 12 columns
     bottom: -6rem;
     left: 0;
     padding: 1rem;
+    z-index: 5;
 
     &__heading {
         text-transform: uppercase;
@@ -185,6 +193,7 @@ total 12 columns
     position: absolute;
     bottom: -5rem;
     right: 0;
+    z-index: 5;
 
     &__field {
         display: inline-block;
@@ -201,7 +210,7 @@ total 12 columns
         transition: all .3s;
 
         @media @desktop {
-            width: 20rem;
+            width: 19rem;
             height: 0;
 
             &:focus {
@@ -236,32 +245,40 @@ total 12 columns
 
 .menu {
     height: 5rem;
+    width: 50%;
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: @color-grey-dark;
-    color: @color-grey-light;
     text-transform: uppercase;
     font-weight: 100;
     font-size: 1.6rem;
-    display: none;
+    display: block;
     line-height: 5rem;
-
-    @media @tablet-strict {
-        padding: 0 !important;
-    }
+    z-index: 10;
+    transition: all .2s;
 
     @media @tablet {
         display: flex;
+        width: 100%;
     }
+
+    @media @phone-strict {
+        margin: 0;
+
+        &._hidden {
+            left: -50%;
+        }
+    }
+
 
     &__item {
         display: block;
         list-style-type: none;
-        text-align: center;
         flex-grow: 1;
         cursor: pointer;
+        text-align: left;
+        background-color: @color-grey-dark;
 
         &:hover,
         &._selected {
@@ -270,6 +287,7 @@ total 12 columns
 
         @media @tablet {
             display: inline-block;
+            text-align: center;
         }
     }
 
@@ -294,8 +312,13 @@ total 12 columns
         display: none;
     }
 
-    &__icon {
+    &__icon-wrap {
         height: 3rem;
+
+        & > svg > * {
+            height: 100%;
+            fill: @color-grey-light;
+        }
     }
 
     @media @tablet {
@@ -305,11 +328,11 @@ total 12 columns
 
 .bread-crumbs {
     list-style: none;
-    padding: 2rem 4rem;
+    padding: 2rem 1rem;
 
     &__item {
         display: inline-block;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
     &__link,
@@ -328,18 +351,35 @@ total 12 columns
     &__item:last-child &__link {
         color: @color-highlight;
     }
+
+    @media @tablet {
+        padding: 2rem 4rem;
+        font-size: 1.6rem;
+    }
 }
 
 .heading-primary {
     text-transform: uppercase;
-    font-size: 5rem;
+    font-size: 3.5rem;
     font-weight: 600;
+
+    @media @tablet {
+        font-size: 5rem;
+    }
 }
 
 .heading-secondary {
     text-transform: uppercase;
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 600;
+
+    & > *:nth-child(2) {
+        color: @color-highlight;
+    }
+
+    @media @tablet {
+        font-size: 4rem;
+    }
 }
 
 .content {
@@ -397,12 +437,22 @@ total 12 columns
 
 .video-gallery {
     text-align: center;
+
+    &__heading {
+        text-align: left;
+    }
+
+    &__btn {
+        margin: 4rem 0 7rem;
+    }
 }
 
 .slider {
     position: relative;
 
     &__item {
+        width: 100%;
+        height: 100%;
         padding: 0 .5rem;
         display: block;
 

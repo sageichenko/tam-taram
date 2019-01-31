@@ -33,8 +33,8 @@
             <p class="address-box__address">lorem ipsum 234651</p>
         </div>
         <label class="menu-hidden">
-            <input type="checkbox" class="menu-hidden__check-box">
-            <img src="img/ico_hidden-menu.svg" alt="hidden-menu-icon" class="menu-hidden__icon">
+            <input id="menu-check-box" type="checkbox" class="menu-hidden__check-box">
+            <div class="menu-hidden__icon-wrap"><%- include('img/ico_hidden-menu.svg')%></div>
         </label>
         <div class="logo-box">
             <img src="img/logo.svg" alt="" class="logo">
@@ -45,8 +45,7 @@
         </form>
     </div>
     <div class="header-bottom">
-
-        <menu class="menu row">
+        <menu id="menu" class="menu _hidden row">
             <% menuItems.forEach(item => { %>
                 <li class="menu__item"><a class="menu__link" href="<%= item.link; %>"><%= item.title %></a></li>
             <% }) %>
@@ -111,7 +110,7 @@
         <%
             videosData.forEach( item => { %>
             <div class="row">
-                <h2 class="heading-secondary"><%=item.title%></h2>
+                <h2 class="heading-secondary video-gallery__heading"><%item.title.split(' ').forEach( (word) => {%> <span><%=word%></span> <%})%></h2>
                 <div class="slider">
                     <%item.id.forEach(id => {%>
                         <div class="video-box slider__item">
@@ -122,8 +121,9 @@
                         </div>
                     <%})%>
                 </div>
+                <button class="load-btn video-gallery__btn">load more</button>
             </div>
-        <button class="load-btn">load more</button>
+
             <%})%>
     </div>
 </section>

@@ -2,7 +2,11 @@ document.addEventListener('DOMContentLoaded', function () {
     initSlider('.slider');
     const $checkBox = $('#menu-check-box')[0];
     $checkBox.addEventListener('input', () => {
-        toggleMenu();
+        if($checkBox.checked) {
+            openMenu();
+            return;
+        }
+        closeMenu();
     });
 });
 

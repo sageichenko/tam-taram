@@ -6,7 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css" />
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.css"/>
     <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -28,108 +28,135 @@
 
 <header class="header">
     <div class="header-top">
+
+        <%
+        const addresses = [
+            {address: 'Lorem ipsum 234651', link: '#'},
+            {address: 'Dolorum, impedit 234651', link: '#'},
+            {address: 'Dolor, illum 234651', link: '#'},
+            {address: 'Doloremque, libero 234651', link: '#'},
+            {address: 'Aliquam, velit 234651', link: '#'}
+        ]
+        %>
         <div class="address-box">
-            <p class="address-box__heading">nearest salon <img src="img/ico_dropdown.svg" alt="" class="address-box__dropdown"></p>
-            <p class="address-box__address">lorem ipsum 234651</p>
+            <a class="address-box__nearest-salon" href="#"><span class="address-box__heading">nearest salon <img
+                            src="img/ico_dropdown.svg" alt=""
+                            class="address-box__dropdown"></span></a>
+            <!--<p class="address-box__address"><%= addresses[0] %></p>-->
+            <ul class="address-box__list">
+                <% addresses.forEach( (item) => { %>
+                <li class="address-box__list-item"><a href="<%= item.link %>"
+                                                      class="address-box__link"><%= item.address %></a></li>
+                <% }) %>
+            </ul>
         </div>
         <label class="menu-hidden">
             <input id="menu-check-box" type="checkbox" class="menu-hidden__check-box">
-            <div class="menu-hidden__icon-wrap"><%- include('img/ico_hidden-menu.svg')%></div>
+            <span class="menu-hidden__icon-wrap"><%- include('img/ico_hidden-menu.svg') %></span>
         </label>
         <div class="logo-box">
             <img src="img/logo.svg" alt="" class="logo">
         </div>
         <form action="#" class="search">
             <input class="search__field" type="search" placeholder="Search...">
-            <input class="search__btn" type="image" src="img/ico_search.svg">
+            <input class="search__btn" type="image" src="img/ico_search.svg" alt="search-button-image">
         </form>
     </div>
     <div class="header-bottom">
-        <menu id="menu" class="menu _hidden row">
+        <nav id="menu" class="menu _hidden row">
             <% menuItems.forEach(item => { %>
                 <li class="menu__item"><a class="menu__link" href="<%= item.link; %>"><%= item.title %></a></li>
             <% }) %>
-        </menu>
+        </nav>
     </div>
 </header>
 
 <%
-    const breadCrumbs = [
-        {title: 'home', link: '#'},
-        {title: 'videos', link: '#'}
-    ]
+const breadCrumbs = [
+    {title: 'home', link: '#'},
+    {title: 'videos', link: '#'}
+]
 %>
-<menu class="bread-crumbs">
+<ul class="bread-crumbs">
     <% breadCrumbs.forEach( (item, ind) => { %>
-        <li class="bread-crumbs__item"><a href="<%=item.link%>" class="bread-crumbs__link"><%=item.title%></a><%=(ind!==breadCrumbs.length-1)?' /':''%></li>
+        <li class="bread-crumbs__item"><a href="<%= item.link %>"
+                                          class="bread-crumbs__link"><%= item.title %></a><%= (ind !== breadCrumbs.length - 1) ? ' /' : '' %>
+        </li>
     <% }) %>
-</menu>
+</ul>
 <section class="content">
-    <div class="main-video row">
+    <div class="main row">
         <h1 class="heading-primary">videos</h1>
-        <div class="video-box">
+        <div class="video-box main__video">
             <a data-fancybox href="https://youtu.be/z8M0Fa1JVco">
                 <img src="https://img.youtube.com/vi/z8M0Fa1JVco/maxresdefault.jpg" alt="" class="video-box__preview">
                 <div class="video-box__btn-play _small"><img src="img/play-button.png" alt="play-button"></div>
             </a>
         </div>
-        <p class="main-video__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci, asperiores aspernatur consequatur dolorum error illum maiores minus neque nesciunt non placeat porro quasi recusandae sapiente sint vero voluptate voluptatibus. Aut deserunt earum facere, minima modi nisi perspiciatis qui vitae voluptas.</p>
+        <p class="main__description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci,
+            asperiores aspernatur consequatur dolorum error illum maiores minus neque nesciunt.</p>
     </div>
     <%
-        const videosData = [
-            {
-                title: 'step by step',
-                id: [
-                        'z8M0Fa1JVco',
-                        'Wi2KcdoCuo4',
-                        '8H6dYUgQKB8',
-                        'PZjGrmHdFME',
-                        '_wLGr24VeoI',
-                        'DG4FAU5qmMY'
-                ]
-            },
-            {
-                title: 'craft education',
-                id: [
-                        'RmNWNLXmswk',
-                        '-tztXOz8Vc0',
-                        'kUfIVtyydgQ'
-                ]
-            },
-            {
-                title: 'inspiration',
-                id: [
-                        'VmmwwzR536g',
-                        'vz0k8O-Ef9Y',
-                        '6oPBFnsqJW8'
-                ]
-            }
-        ]
+    const videosData = [
+        {
+            title: 'step by step',
+            id: [
+                'z8M0Fa1JVco',
+                'Wi2KcdoCuo4',
+                '8H6dYUgQKB8',
+                'PZjGrmHdFME',
+                '_wLGr24VeoI',
+                'DG4FAU5qmMY'
+            ]
+        },
+        {
+            title: 'craft education',
+            id: [
+                'RmNWNLXmswk',
+                '-tztXOz8Vc0',
+                'kUfIVtyydgQ'
+            ]
+        },
+        {
+            title: 'inspiration',
+            id: [
+                'VmmwwzR536g',
+                'vz0k8O-Ef9Y',
+                '6oPBFnsqJW8'
+            ]
+        }
+    ]
     %>
     <div id="gallery" class="video-gallery">
         <%
-            videosData.forEach( item => { %>
+        videosData.forEach( item => { %>
             <div class="row">
-                <h2 class="heading-secondary video-gallery__heading"><%item.title.split(' ').forEach( (word) => {%> <span><%=word%></span> <%})%></h2>
+                <h2 class="heading-secondary video-gallery__heading">
+                    <% item.title.split(' ').forEach( (word) => { %>
+                        <span><%= word %></span>
+                    <% }) %>
+                </h2>
                 <div class="slider">
-                    <%item.id.forEach(id => {%>
+                    <% item.id.forEach(id => { %>
                         <div class="video-box slider__item">
-                            <a data-fancybox href="https://youtu.be/<%=id;%>">
-                                <img src="https://img.youtube.com/vi/<%=id;%>/maxresdefault.jpg" alt="" class="video-box__preview">
-                                <div class="video-box__btn-play _small"><img src="img/play-button.png" alt="play-button"></div>
+                            <a data-fancybox href="https://youtu.be/<%= id; %>">
+                                <img src="https://img.youtube.com/vi/<%= id; %>/maxresdefault.jpg" alt=""
+                                     class="video-box__preview">
+                                <div class="video-box__btn-play _small"><img src="img/play-button.png"
+                                                                             alt="play-button"></div>
                             </a>
                         </div>
-                    <%})%>
+                    <% }) %>
                 </div>
                 <button class="load-btn video-gallery__btn">load more</button>
             </div>
 
-            <%})%>
+        <% }) %>
     </div>
 </section>
 <footer class="footer clear-fix">
     <%
-    const footerContactItems = [
+    const footerSocialItems = [
         {path: 'img/ico_facebook.svg', link: '#'},
         {path: 'img/ico_twitter.svg', link: '#'},
         {path: 'img/ico_pinterest.svg', link: '#'},
@@ -137,37 +164,37 @@
         {path: 'img/ico_instagram.svg', link: '#'}
     ]
     %>
-    <div class="footer__contacts footer__item">
-        <ul class="footer__contact-list">
-            <% footerContactItems.forEach( item => {%>
-            <li class="footer__contact-item">
-                <a href="<%=item.link%>" class="footer__link">
-                    <div class="footer__icon-wrap"><%- include(`${item.path}`)%></div>
-                </a>
-            </li>
-            <%})%>
+    <div class="social footer__social footer__item">
+        <ul class="social__list footer__social-list">
+            <% footerSocialItems.forEach( item => { %>
+                <li class="social__item footer__social-item">
+                    <a href="<%= item.link %>" class="social__link">
+                        <div class="social__icon-wrap"><%- include(`${item.path}`) %></div>
+                    </a>
+                </li>
+            <% }) %>
         </ul>
     </div>
-    <div class="footer__location footer__item">
-        <p>location: <span class="footer__location-value">united state</span></p>
-        <p>language: <span class="footer__location-value">english</span></p>
+    <div class="location footer__location footer__item">
+        <p class="location__item">location: <span class="location__value">united state</span></p>
+        <p class="location__item">language: <span class="location__value">english</span></p>
     </div>
     <%
-        const footerNavItems = [
-            {title: 'privacy policy', link: '#'},
-            {title: 'terms of use', link: '#'},
-            {title: 'contact us', link: '#'},
-            {title: 'newsletter', link: '#'},
-            {title: 'sitemap', link: '#'}
-            ]
+    const footerNavItems = [
+        {title: 'privacy policy', link: '#'},
+        {title: 'terms of use', link: '#'},
+        {title: 'contact us', link: '#'},
+        {title: 'newsletter', link: '#'},
+        {title: 'sitemap', link: '#'}
+    ]
     %>
-    <div class="footer__nav footer__item">
-        <ul class="footer__nav-list">
-            <% footerNavItems.forEach( item => {%>
-                <li class="footer__nav-item">
-                    <a href="<%=item.link%>" class="footer__link"><%=item.title%></a>
+    <div class="nav footer__nav footer__item">
+        <ul class="nav__list">
+            <% footerNavItems.forEach( item => { %>
+                <li class="nav__item">
+                    <a href="<%= item.link %>" class="nav__link"><%= item.title %></a>
                 </li>
-            <%})%>
+            <% }) %>
         </ul>
     </div>
 </footer>

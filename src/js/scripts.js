@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initSlider('.slider');
     const $checkBox = $('#menu-check-box')[0];
     $checkBox.addEventListener('input', () => {
-        if($checkBox.checked) {
+        if ($checkBox.checked) {
             openMenu();
             return;
         }
@@ -54,14 +54,14 @@ function initSlider(selector) {
     });
 }
 
-function toggleMenu () {
+function toggleMenu() {
     $('#menu')[0].classList.toggle('_hidden');
 }
 
-function openMenu () {
+function openMenu() {
     $('#menu')[0].classList.remove('_hidden');
 }
 
-function closeMenu () {
+function closeMenu() {
     $('#menu')[0].classList.add('_hidden');
 }

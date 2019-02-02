@@ -1,21 +1,21 @@
 @import 'media';
 /*  VARIABLES  */
 @offset-horizontal: 1.5rem;
-@offset-vertical: 8rem;
-@offset-vertical-small: 4rem;
+@offset-vertical: 3rem;
+@offset-vertical-small: 2rem;
 
-@grid-width: 112rem;
+@grid-width: 95rem;
 @grid-padding-small: 1rem;
 @grid-padding: 4rem;
 @grid-padding-big: 6rem;
 @col-1-width: ~'calc((100% - 11 * @{offset-horizontal}) / 12)';
 
-@color-primary: #5022c8;
-@color-grey-dark: #2a2a2a;
-@color-grey-light: #c8c8c8;
+@color-primary: #5b1dcd;
+@color-grey-dark: #262626;
+@color-grey-light: #ccc;
 @color-white: #fff;
 @color-black: #000;
-@color-highlight: #af233f;
+@color-highlight: #cd1d2c;
 
 /*   BASE   */
 *,
@@ -28,7 +28,7 @@
 
 html {
     font-size: 10px; // 1rem = 10px
-    font-family: sans-serif;
+    font-family: 'PT Sans', sans-serif;
 }
 
 body {
@@ -44,7 +44,7 @@ body {
         margin: 0 auto;
 
         &:not(:last-child) {
-            margin-bottom: @offset-vertical-small;
+            margin-bottom: 6rem;
         }
     }
 
@@ -58,37 +58,6 @@ body {
     }
 }
 
-/*[class^='col-'] {
-    display: inline-block;
-    vertical-align: top;
-    width: ~'calc(@{col-1-width} * 12 + 11 * @{offset-horizontal})';
-
-    &:not(:last-child) {
-        margin-right: @offset-horizontal;
-    }
-
-    @media @tablet {
-        width: ~'calc(@{col-1-width} * 6 + 5 * @{offset-horizontal})';
-    }
-}
-
-@media @desktop {
-    !*
-total 12 columns
-.col-1{ // width of one column
-    ...
-}
-.col-2{ // width of two column
-    ...
-}
-...*!
-    .col-4 {
-        width: @col-1-width;
-        //width: ~'calc(@{col-1-width} * 4 + 3 * @{offset-horizontal})';
-    }
-}*/
-
-
 /*  UTILITIES  */
 .clear-fix {
     &::after {
@@ -99,26 +68,8 @@ total 12 columns
 }
 
 /*  STYLES  */
-//.arrow {
-//    border-style: solid;
-//    border-width: 0 .5rem .5rem 0;
-//    display: inline-block;
-//    padding: .5rem;
-//
-//    &._down {
-//        transform: rotate(45deg);
-//    }
-//
-//    &._left {
-//        transform: rotate(135deg);
-//    }
-//
-//    &._right {
-//        transform: rotate(-45deg);
-//    }
-//}
 .header {
-    height: 12rem;
+    height: 10rem;
     color: @color-white;
     text-align: center;
 }
@@ -132,6 +83,10 @@ total 12 columns
     position: relative;
     height: 5rem;
     background: @color-grey-dark;
+
+    @media @tablet {
+        height: 3.5rem;
+    }
 }
 
 .address-box {
@@ -139,45 +94,92 @@ total 12 columns
     font-weight: 100;
     height: 100%;
     font-size: 1.2rem;
-    transform: scaleX(.8);
+    //transform: scaleX(.8);
     position: absolute;
     bottom: -6rem;
     left: 0;
-    padding: 1rem;
+    padding: 1.7rem;
     z-index: 5;
+    text-align: left;
+
+    @media @tablet {
+        top: 0;
+        padding: 2rem 0 0 1.5rem;
+        font-size: 1.4rem;
+    }
 
     &__heading {
         text-transform: uppercase;
-        font-weight: bold;
+
+        @media @desktop {
+            font-weight: bold;
+        }
     }
 
     &__address {
         text-transform: capitalize;
     }
 
-    &__dropdown {
-        height: .7rem;
-        cursor: pointer;
+    &__list {
+        list-style: none;
+        height: 2rem;
+        overflow: hidden;
+        transition: all .2s;
     }
 
-    @media @tablet {
-        top: 0;
-        padding: 2rem 3rem;
+    &__list-item {
+        height: 2rem;
+    }
+
+    &__link,
+    &__link:link,
+    &__link:visited {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &__dropdown {
+        height: .7rem;
+    }
+
+    &__nearest-salon,
+    &__nearest-salon:link,
+    &__nearest-salon:visited {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    &:hover > &__list {
+        background-color: @color-white;
+        color: @color-grey-dark;
+        height: auto;
+        font-size: 1.5rem;
+        padding: 1rem;
+    }
+
+    &:hover &__list-item {
+        height: 3rem;
+
+        &:hover {
+            font-weight: 400;
+            cursor: pointer;
+        }
     }
 }
 
 
 .logo-box {
-    height: 5.5rem;
+    height: 1.5rem;
     display: inline-block;
-    padding: 2rem 0;
+    margin: 2.7rem 0;
 
     @media @tablet {
-        height: 6rem;
+        margin: 3.2rem 0;
+        height: 2.2rem;
     }
 
-    @media @desktop {
-        height: 7rem;
+    @media @tablet {
+        margin: 2rem 0;
     }
 }
 
@@ -186,7 +188,7 @@ total 12 columns
 }
 
 .search {
-    padding: 0 1rem;
+    padding-right: 1rem;
     height: 5rem;
     display: inline-flex;
     align-items: center;
@@ -195,42 +197,6 @@ total 12 columns
     right: 0;
     z-index: 5;
 
-    &__field {
-        display: inline-block;
-        height: 45%;
-        outline: none;
-        border-width: 0 50% 50% 0;
-        border-style: solid;
-        border-color: @color-primary;
-        color: @color-grey-dark;
-        border-radius: 3px;
-        margin-right: 1.5rem;
-        width: 15rem;
-        position: relative;
-        transition: all .3s;
-
-        @media @desktop {
-            width: 19rem;
-            height: 0;
-
-            &:focus {
-                transform: scaleY(1.05);
-            }
-        }
-    }
-
-    &__btn {
-        height: 30%;
-
-        &:hover {
-            transform: scale(1.05);
-        }
-
-        @media @desktop {
-            height: 40%;
-        }
-    }
-
     &:hover &__field {
         height: 45%;
         border-width: 0;
@@ -238,13 +204,63 @@ total 12 columns
 
     @media @tablet {
         top: 0;
-        padding: 0 3rem;
-        height: 7rem;
+        padding: 0 2rem;
+        height: 8rem;
+    }
+
+    @media @desktop {
+        height: 6rem;
+    }
+
+    &__field {
+        display: inline-block;
+        height: 45%;
+        outline: none;
+        border: none;
+        color: @color-grey-dark;
+        border-radius: 3px;
+        margin-right: 1rem;
+        width: 100%;
+        position: relative;
+        transition: all .3s;
+
+        @media @tablet {
+            width: 15rem;
+        }
+
+        @media @desktop {
+            border-width: 0 50% 50% 0;
+            border-style: solid;
+            border-color: @color-primary;
+            width: 19rem;
+            height: 0;
+
+            &:focus {
+                transform: scaleY(1.05);
+                height: 45%;
+            }
+        }
+    }
+
+    &__btn {
+        height: 50%;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
+        @media @tablet {
+            height: 30%;
+        }
+
+        @media @desktop {
+            height: 35%;
+        }
     }
 }
 
 .menu {
-    height: 5rem;
+    height: 3.5rem;
     width: 50%;
     position: absolute;
     bottom: 0;
@@ -252,16 +268,11 @@ total 12 columns
     right: 0;
     text-transform: uppercase;
     font-weight: 100;
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     display: block;
-    line-height: 5rem;
+    line-height: 3.5rem;
     z-index: 10;
     transition: all .2s;
-
-    @media @tablet {
-        display: flex;
-        width: 100%;
-    }
 
     @media @phone-strict {
         margin: 0;
@@ -269,6 +280,16 @@ total 12 columns
         &._hidden {
             left: -50%;
         }
+    }
+    @media @tablet {
+        line-height: 4rem;
+        height: 4rem;
+        display: flex;
+        width: 100%;
+    }
+
+    @media @desktop {
+        height: 3.5rem;
     }
 
 
@@ -306,7 +327,7 @@ total 12 columns
 
 .menu-hidden {
     float: left;
-    padding: 1.5rem;
+    padding: 2rem 0 2rem 2rem;
 
     &__check-box {
         display: none;
@@ -328,11 +349,11 @@ total 12 columns
 
 .bread-crumbs {
     list-style: none;
-    padding: 2rem 1rem;
+    padding: 4rem 1rem 0;
 
     &__item {
         display: inline-block;
-        font-size: 1.4rem;
+        font-size: 1.2rem;
     }
 
     &__link,
@@ -353,18 +374,22 @@ total 12 columns
     }
 
     @media @tablet {
-        padding: 2rem 4rem;
-        font-size: 1.6rem;
+        padding: 6rem 4rem 0;
+        font-size: 1.4rem;
     }
 }
 
 .heading-primary {
     text-transform: uppercase;
-    font-size: 3.5rem;
+    font-size: 3rem;
     font-weight: 600;
 
     @media @tablet {
-        font-size: 5rem;
+        font-size: 6rem;
+    }
+
+    @media @desktop {
+        font-size: 8rem;
     }
 }
 
@@ -378,7 +403,11 @@ total 12 columns
     }
 
     @media @tablet {
-        font-size: 4rem;
+        font-size: 3rem;
+    }
+
+    @media @desktop {
+        font-size: 4.5rem;
     }
 }
 
@@ -386,26 +415,42 @@ total 12 columns
     padding: 0 @grid-padding-small 10rem;
 
     @media @phone {
-        padding: 2rem @grid-padding;
+        padding: 0 @grid-padding;
     }
 
     @media @desktop {
-        padding: 5rem @grid-padding-big;
+        padding: 1rem @grid-padding-big;
     }
 }
 
-.main-video {
-    border-bottom: 1px solid @color-grey-dark;
-    padding-bottom: 2rem;
+.main {
+    border-bottom: 2px solid @color-grey-dark;
+    padding-bottom: 1rem;
 
     &__description {
         font-weight: bold;
         font-size: 1.6rem;
+
+        @media @tablet {
+            font-size: 3rem;
+        }
+
+    }
+
+    &__video {
+        margin: 1rem 0 2rem;
+
+        @media @tablet {
+            margin: 4rem 0 2rem;
+        }
+    }
+
+    @media @tablet {
+        padding-bottom: 2rem;
     }
 }
 
 .video-box {
-    margin: 2rem 0;
     width: 100%;
     position: relative;
 
@@ -420,7 +465,7 @@ total 12 columns
         left: 50%;
         transform: translate(-50%, -50%);
         opacity: .8;
-        width: 30%;
+        width: 25%;
         border-radius: 50%;
         transition: all .2s;
 
@@ -437,6 +482,7 @@ total 12 columns
 
 .video-gallery {
     text-align: center;
+    padding: 5rem 2rem;
 
     &__heading {
         text-align: left;
@@ -524,7 +570,7 @@ total 12 columns
     left: -3rem;
 
     @media @desktop {
-        left: -4rem;
+        left: -7rem;
     }
 }
 
@@ -533,11 +579,12 @@ total 12 columns
     right: -3rem;
 
     @media @desktop {
-        right: -4rem;
+        right: -7rem;
     }
 }
 
 .load-btn {
+    font-family: 'PT Sans Narrow', sans-serif;
     text-transform: uppercase;
     background-color: @color-grey-dark;
     color: @color-grey-light;
@@ -560,20 +607,13 @@ total 12 columns
     background-color: @color-grey-dark;
     color: @color-grey-light;
     padding: 3rem 2rem 10rem;
-    font-size: 1.1rem;
+    font-size: 1rem;
     text-transform: uppercase;
     position: relative;
     font-weight: 200;
 
     @media @tablet {
-        padding: 2rem 4rem;
-    }
-
-    &__link,
-    &__link:link,
-    &__link:visited {
-        text-decoration: none;
-        color: inherit;
+        padding: 1rem 2rem;
     }
 
     &__item {
@@ -581,16 +621,48 @@ total 12 columns
     }
 
     &__nav {
-        width: 20rem;
-        text-align: left;
         float: left;
     }
 
-    &__nav-list {
+    &__social {
+        @media @tablet {
+            position: absolute;
+            //top: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
+
+    &__social-item {
+        height: 1rem;
+        width: 1rem;
+        margin: 1rem 2rem 1rem 0;
+        @media @tablet {
+            margin: 1rem;
+            height: 2rem;
+            width: 2rem;
+        }
+    }
+
+    &__location {
+        text-align: left;
+
+        @media @tablet {
+            float: right;
+            text-align: right;
+        }
+    }
+}
+
+.nav {
+    width: 25rem;
+    text-align: left;
+
+    &__list {
         list-style: none;
     }
 
-    &__nav-item {
+    &__item {
         display: inline-block;
         padding: .5rem;
 
@@ -600,29 +672,32 @@ total 12 columns
         }
     }
 
-    &__contacts {
-        @media @tablet {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-        }
+    &__link,
+    &__link:link,
+    &__link:visited {
+        text-decoration: none;
+        color: inherit;
+    }
+}
+
+.location {
+
+    &__item {
+        padding: .5rem;
     }
 
-    &__contact-list {
+    &__value {
+        font-weight: 600;
+    }
+}
+
+.social {
+    &__list {
         list-style: none;
     }
 
-    &__contact-item {
+    &__item {
         display: inline-block;
-        height: 2.5rem;
-        width: 2.5rem;
-        margin: 1rem 2rem 1rem 0;
-        @media @tablet {
-            margin: 1.5rem;
-            height: 3rem;
-            width: 3rem;
-        }
     }
 
     &__icon-wrap {
@@ -637,17 +712,11 @@ total 12 columns
         }
     }
 
-    &__location {
-        padding: .5rem;
-        text-align: left;
-        @media @tablet {
-            float: right;
-            text-align: right;
-        }
-    }
-
-    &__location-value {
-        font-weight: 600;
+    &__link,
+    &__link:link,
+    &__link:visited {
+        text-decoration: none;
+        color: inherit;
     }
 }
 

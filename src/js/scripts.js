@@ -1,5 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
-    initSlider('.slider');
+    if (window.width > 425) {
+        initSlider('.slider');
+    }
+
     const $checkBox = $('#menu-check-box')[0];
     $checkBox.addEventListener('input', () => {
         if ($checkBox.checked) {
@@ -14,6 +17,8 @@ function initSlider(selector) {
     $(selector).slick({
         infinite: false,
         mobileFirst: true,
+        nextArrow: '<bitton type="button" class="slider-arrow slick-next"></bitton>',
+        prevArrow: '<button type="button" class="slick-arrow slick-prev"></button>',
 
         responsive: [
             {
@@ -28,7 +33,7 @@ function initSlider(selector) {
                 }
             },
             {
-                breakpoint: 425,
+                breakpoint: 424,
                 settings: {
                     slidesToShow: 2,
                     slidesToScroll: 2,

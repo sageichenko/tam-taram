@@ -1,16 +1,16 @@
 @import 'media';
 /*  VARIABLES  */
 @offset-horizontal: 1.5rem;
-@offset-vertical: 3rem;
+@offset-vertical: 7rem;
 @offset-vertical-small: 2rem;
 
-@grid-width: 95rem;
+@grid-width: 96rem;
 @grid-padding-small: 1rem;
 @grid-padding: 4rem;
 @grid-padding-big: 6rem;
 @col-1-width: ~'calc((100% - 11 * @{offset-horizontal}) / 12)';
 
-@color-primary: #5b1dcd;
+@color-primary: #691dcd;
 @color-grey-dark: #262626;
 @color-grey-light: #ccc;
 @color-white: #fff;
@@ -44,17 +44,12 @@ body {
         margin: 0 auto;
 
         &:not(:last-child) {
-            margin-bottom: 6rem;
+            margin-bottom: @offset-vertical;
         }
     }
 
     @media @desktop {
         max-width: @grid-width;
-        margin: 0 auto;
-
-        &:not(:last-child) {
-            margin-bottom: @offset-vertical;
-        }
     }
 }
 
@@ -85,6 +80,10 @@ body {
     background: @color-grey-dark;
 
     @media @tablet {
+        height: 4rem;
+    }
+
+    @media @desktop {
         height: 3.5rem;
     }
 }
@@ -94,7 +93,6 @@ body {
     font-weight: 100;
     height: 100%;
     font-size: 1.2rem;
-    //transform: scaleX(.8);
     position: absolute;
     bottom: -6rem;
     left: 0;
@@ -108,8 +106,17 @@ body {
         font-size: 1.4rem;
     }
 
+    @media @desktop {
+        font-size: 1.1rem;
+    }
+
     &__heading {
+        font-family: 'PT Sans Narrow', sans-serif;
         text-transform: uppercase;
+
+        @media @tablet {
+            font-family: 'PT Sans', sans-serif;
+        }
 
         @media @desktop {
             font-weight: bold;
@@ -139,7 +146,7 @@ body {
     }
 
     &__dropdown {
-        height: .7rem;
+        height: .6rem;
     }
 
     &__nearest-salon,
@@ -147,23 +154,6 @@ body {
     &__nearest-salon:visited {
         text-decoration: none;
         color: inherit;
-    }
-
-    &:hover > &__list {
-        background-color: @color-white;
-        color: @color-grey-dark;
-        height: auto;
-        font-size: 1.5rem;
-        padding: 1rem;
-    }
-
-    &:hover &__list-item {
-        height: 3rem;
-
-        &:hover {
-            font-weight: 400;
-            cursor: pointer;
-        }
     }
 }
 
@@ -174,11 +164,11 @@ body {
     margin: 2.7rem 0;
 
     @media @tablet {
-        margin: 3.2rem 0;
+        margin: 2.5rem 0;
         height: 2.2rem;
     }
 
-    @media @tablet {
+    @media @desktop {
         margin: 2rem 0;
     }
 }
@@ -260,7 +250,7 @@ body {
 }
 
 .menu {
-    height: 3.5rem;
+    height: 5rem;
     width: 50%;
     position: absolute;
     bottom: 0;
@@ -270,7 +260,7 @@ body {
     font-weight: 100;
     font-size: 1.2rem;
     display: block;
-    line-height: 3.5rem;
+    line-height: 5rem;
     z-index: 10;
     transition: all .2s;
 
@@ -290,6 +280,8 @@ body {
 
     @media @desktop {
         height: 3.5rem;
+        line-height: 3.5rem;
+        font-size: 1.3rem;
     }
 
 
@@ -351,6 +343,15 @@ body {
     list-style: none;
     padding: 4rem 1rem 0;
 
+    @media @tablet {
+        padding: 5rem 4rem 0;
+        font-size: 1.4rem;
+    }
+
+    @media @desktop {
+        padding: 1rem 4rem 0;
+    }
+
     &__item {
         display: inline-block;
         font-size: 1.2rem;
@@ -371,11 +372,6 @@ body {
 
     &__item:last-child &__link {
         color: @color-highlight;
-    }
-
-    @media @tablet {
-        padding: 6rem 4rem 0;
-        font-size: 1.4rem;
     }
 }
 
@@ -418,8 +414,12 @@ body {
         padding: 0 @grid-padding;
     }
 
+    @media @tablet {
+        padding: 0 @grid-padding 7rem;
+    }
+
     @media @desktop {
-        padding: 1rem @grid-padding-big;
+        padding: 3.5rem @grid-padding-big 9rem;
     }
 }
 
@@ -434,14 +434,13 @@ body {
         @media @tablet {
             font-size: 3rem;
         }
-
     }
 
     &__video {
         margin: 1rem 0 2rem;
 
         @media @tablet {
-            margin: 4rem 0 2rem;
+            margin: 1.5rem 0 2rem;
         }
     }
 
@@ -465,7 +464,7 @@ body {
         left: 50%;
         transform: translate(-50%, -50%);
         opacity: .8;
-        width: 25%;
+        width: 25% !important;
         border-radius: 50%;
         transition: all .2s;
 
@@ -482,7 +481,7 @@ body {
 
 .video-gallery {
     text-align: center;
-    padding: 5rem 2rem;
+    padding: 0;
 
     &__heading {
         text-align: left;
@@ -491,43 +490,22 @@ body {
     &__btn {
         margin: 4rem 0 7rem;
     }
+    @media @tablet {
+        padding: 0 2rem;
+    }
 }
 
 .slider {
-    position: relative;
-
     &__item {
         width: 100%;
-        height: 100%;
+        height: auto;
         padding: 0 .5rem;
         display: block;
+        margin-bottom: 4rem;
 
         @media @tablet {
             display: inline-block;
-        }
-    }
-
-    &__arrow {
-        position: absolute;
-        top: 50%;
-        padding: .7rem;
-        border-color: @color-grey-light;
-        transition: all .2s;
-
-        &._available {
-            border-color: @color-grey-dark;
-        }
-
-        &:hover &._available {
-            cursor: pointer;
-            padding: .8rem;
-            border-width: 0 .6rem .6rem 0;
-        }
-
-        &:active &._available {
-            cursor: pointer;
-            padding: .7rem;
-            border-width: 0 .6rem .6rem 0;
+            margin: 0;
         }
     }
 }
@@ -590,8 +568,6 @@ body {
     color: @color-grey-light;
     font-size: 1.5rem;
     padding: 1.5rem 4rem;
-    font-weight: 400;
-    font-stretch: condensed;
 
     &:focus,
     &:active {
@@ -657,6 +633,11 @@ body {
 .nav {
     width: 25rem;
     text-align: left;
+    font-size: 1.2rem;
+
+    @media @tablet {
+        width: 20rem;
+    }
 
     &__list {
         list-style: none;
@@ -665,6 +646,10 @@ body {
     &__item {
         display: inline-block;
         padding: .5rem;
+
+        @media @tablet {
+            padding: 0;
+        }
 
         &:hover {
             background-color: @color-black;

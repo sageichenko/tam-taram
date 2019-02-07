@@ -1,4 +1,4 @@
-module.exports =  function debounce(func, ms) {
+export default function debounce(func, ms) {
     let timer = null;
     return function () {
         if (timer) {
@@ -9,4 +9,5 @@ module.exports =  function debounce(func, ms) {
             func(...[].slice.call(arguments));
         }, ms);
     };
-};
+}
+

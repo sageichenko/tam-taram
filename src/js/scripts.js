@@ -1,46 +1,110 @@
-//const debounce = require('./modules/debounce');
+import debounce from './modules/debounce.js';
 
-function debounce(func, ms) {
-    let timer = null;
-    return function () {
-        if (timer) {
-            clearTimeout(timer);
-        }
-        timer = setTimeout(() => {
-            timer = null;
-            func(...[].slice.call(arguments));
-        }, ms);
-    };
-}
+//const log = console.log;
 
 const turningWidth = 425;
+const videosData = {
+    'step by step': {
+        videoIDs: [
+            'z8M0Fa1JVco',
+            'Wi2KcdoCuo4',
+            '8H6dYUgQKB8',
+            'PZjGrmHdFME',
+            '_wLGr24VeoI',
+            'DG4FAU5qmMY'
+        ]
+    },
+    'craft education': {
+        videoIDs: [
+            'RmNWNLXmswk',
+            '-tztXOz8Vc0',
+            'kUfIVtyydgQ'
+        ]
+    }
+    ,
+    'inspiration': {
+        videoIDs: [
+            'VmmwwzR536g',
+            'vz0k8O-Ef9Y',
+            '6oPBFnsqJW8'
+        ]
+    }
+};
 
-document.addEventListener('DOMContentLoaded',  function () {
-    console.log(document.body.clientWidth);
-    if (document.body.clientWidth >= turningWidth) {
+document.addEventListener('DOMContentLoaded', function () {
+    const gallery = $('#gallery')[0];
+    initGallery(gallery);
+    if (document.body.clientWidth > turningWidth) {
         window.addEventListener('resize', handlerDecreaseWindow);
         initSlider('.slider');
     } else {
         window.addEventListener('resize', handlerIncreaseWindow);
     }
 
-    const $checkBox = $('#menu-check-box')[0];
-    $checkBox.addEventListener('input', () => {
-        if ($checkBox.checked) {
+    gallery.addEventListener('click', loadMore);
+
+    const $toggleMenuCheckBox = $('#menu-check-box')[0];
+    $toggleMenuCheckBox.addEventListener('input', () => {
+        if ($toggleMenuCheckBox.checked) {
             openMenu();
             return;
         }
+
         closeMenu();
     });
 });
 
-function removeSlider (selector) {
-    console.log('remove slider');
-    $(selector).slick('unslick');
+function loadMore(ev) {
+    const target = ev.target;
+    if (target.classList.contains('load-btn')) {
+        loadVideos(target.closest('.slider'), true);
+    }
+}
+
+function initGallery(el) {
+    el.innerHTML = Object.keys(videosData).map((key) => {
+        return `<div class="row">
+                <h2 class="heading-secondary video-gallery__heading">
+                    ${key.split(' ').map((word) => {
+                        return `<span>${word}</span>`;
+                    }).join(' ')}
+                </h2>
+                <div data-slider-title="${key}" class="slider">
+                    
+                </div>
+            </div>`;
+    }).join('');
+
+    el.querySelectorAll('.slider').forEach(item => {
+        loadVideos(item,document.body.clientWidth > turningWidth);
+    });
+}
+
+function loadVideos(el, needAllVideo) {
+    let videos;
+    for (const key of Object.keys(videosData)) {
+        if (key === el.dataset.sliderTitle)
+            videos = videosData[key].videoIDs;
+    }
+
+    if (videos) {
+        el.innerHTML = `${((videos.length > 3 && !needAllVideo) ? videos.slice(0, 3) : videos)
+            .map((id) => {
+                return `<div class="video-box slider__item">
+                            <a data-fancybox href="https://youtu.be/${id}">
+                                <img src="https://img.youtube.com/vi/${id}/maxresdefault.jpg" alt="video-preview"
+                                     class="video-box__preview">
+                                <div class="video-box__btn-play"><img src="img/play-button.png"
+                                                                      alt="play-button"></div>
+                            </a>
+                        </div>`;
+            }).join('')}${(videos.length > 3 && !needAllVideo)
+            ? '<button class="load-btn video-gallery__btn">load more</button>'
+            : ''}}`;
+    }
 }
 
 function initSlider(selector) {
-    console.log('init slider');
     $(selector).slick({
         infinite: false,
         mobileFirst: true,
@@ -48,17 +112,6 @@ function initSlider(selector) {
         prevArrow: '<button type="button" class="slick-arrow slick-prev"></button>',
 
         responsive: [
-            // {
-            //     breakpoint: 0,
-            //     settings: {
-            //         slidesToShow: 1,
-            //         slidesToScroll: 1,
-            //         arrows: false,
-            //         vertical: true,
-            //         verticalSwiping: false,
-            //         rows: 3,
-            //     }
-            // },
             {
                 breakpoint: 425,
                 settings: {
@@ -86,20 +139,24 @@ function initSlider(selector) {
     });
 }
 
-const handlerDecreaseWindow = debounce( () => {
-    if (document.body.clientWidth < turningWidth) {
+function removeSlider(selector) {
+    $(selector).slick('unslick');
+}
+
+const handlerDecreaseWindow = debounce(() => {
+    if (document.body.clientWidth <= turningWidth) {
         removeSlider('.slider');
         window.removeEventListener('resize', handlerDecreaseWindow);
         window.addEventListener('resize', handlerIncreaseWindow);
     }
-}, 100);
+}, 500);
 const handlerIncreaseWindow = debounce(() => {
-    if (document.body.clientWidth >= turningWidth) {
+    if (document.body.clientWidth > turningWidth) {
         initSlider('.slider');
         window.removeEventListener('resize', handlerIncreaseWindow);
         window.addEventListener('resize', handlerDecreaseWindow);
     }
-}, 100);
+}, 500);
 
 function toggleMenu() {
     $('#menu')[0].classList.toggle('_hidden');

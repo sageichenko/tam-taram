@@ -489,7 +489,7 @@ body {
     }
 
     &__btn {
-        margin: 1rem 0 2rem;
+        margin: 0 0 6rem;
     }
     @media @tablet {
         padding: 0 2rem;
@@ -500,9 +500,12 @@ body {
     &__item {
         width: 100%;
         height: auto;
-        padding: 0 .5rem;
         display: block;
         margin-bottom: 4rem;
+
+        @media @phone {
+            padding: 0 .5rem;
+        }
 
         @media @tablet {
             display: inline-block;

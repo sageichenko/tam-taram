@@ -82,7 +82,7 @@ module.exports = {
         'selector-combinator-space-after': 'always',
         'selector-combinator-space-before': 'always',
         'selector-descendant-combinator-no-non-space': true,
-        // 'selector-id-pattern': '', TODO: pattern for camelCase ids
+        // 'selector-videoIDs-pattern': '', TODO: pattern for camelCase ids
         'selector-max-compound-selectors': 3,
         'selector-no-empty': true,
         'selector-no-vendor-prefix': true,

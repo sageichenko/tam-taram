@@ -46,8 +46,8 @@
             <!--<p class="address-box__address"><%= addresses[0] %></p>-->
             <ul class="address-box__list">
                 <% addresses.forEach( (item) => { %>
-                <li class="address-box__list-item"><a href="<%= item.link %>"
-                                                      class="address-box__link"><%= item.address %></a></li>
+                    <li class="address-box__list-item"><a href="<%= item.link %>"
+                                                          class="address-box__link"><%= item.address %></a></li>
                 <% }) %>
             </ul>
         </div>
@@ -98,61 +98,9 @@ const breadCrumbs = [
             asperiores aspernatur consequatur dolorum error illum maiores minus neque nesciunt.</p>
     </div>
     <%
-    const videosData = [
-        {
-            title: 'step by step',
-            id: [
-                'z8M0Fa1JVco',
-                'Wi2KcdoCuo4',
-                '8H6dYUgQKB8',
-                'PZjGrmHdFME',
-                '_wLGr24VeoI',
-                'DG4FAU5qmMY'
-            ]
-        },
-        {
-            title: 'craft education',
-            id: [
-                'RmNWNLXmswk',
-                '-tztXOz8Vc0',
-                'kUfIVtyydgQ'
-            ]
-        },
-        {
-            title: 'inspiration',
-            id: [
-                'VmmwwzR536g',
-                'vz0k8O-Ef9Y',
-                '6oPBFnsqJW8'
-            ]
-        }
-    ]
+
     %>
     <div id="gallery" class="video-gallery">
-        <%
-        videosData.forEach( item => { %>
-            <div class="row">
-                <h2 class="heading-secondary video-gallery__heading">
-                    <% item.title.split(' ').forEach( (word) => { %>
-                        <span><%= word %></span>
-                    <% }) %>
-                </h2>
-                <div class="slider">
-                    <% item.id.forEach(id => { %>
-                        <div class="video-box slider__item">
-                            <a data-fancybox href="https://youtu.be/<%= id; %>">
-                                <img src="https://img.youtube.com/vi/<%= id; %>/maxresdefault.jpg" alt="video-preview"
-                                     class="video-box__preview">
-                                <div class="video-box__btn-play"><img src="img/play-button.png"
-                                                                             alt="play-button"></div>
-                            </a>
-                        </div>
-                    <% }) %>
-                </div>
-                <button class="load-btn video-gallery__btn">load more</button>
-            </div>
-
-        <% }) %>
     </div>
 </section>
 <footer class="footer clear-fix">
@@ -203,6 +151,6 @@ const breadCrumbs = [
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/3.0.47/jquery.fancybox.min.js"></script>
 <script src="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
-<script src="js/scripts.js"></script>
+<script type="module" src="js/scripts.js"></script>
 </body>
 </html>

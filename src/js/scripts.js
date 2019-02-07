@@ -1,5 +1,4 @@
 import debounce from './modules/debounce.js';
-
 //const log = console.log;
 
 const turningWidth = 425;
@@ -33,15 +32,16 @@ const videosData = {
 
 document.addEventListener('DOMContentLoaded', function () {
     const gallery = $('#gallery')[0];
+
     initGallery(gallery);
+    gallery.addEventListener('click', loadMore);
+
     if (document.body.clientWidth > turningWidth) {
         window.addEventListener('resize', handlerDecreaseWindow);
-        initSlider('.slider');
+        initSlider($('.slider'));
     } else {
         window.addEventListener('resize', handlerIncreaseWindow);
     }
-
-    gallery.addEventListener('click', loadMore);
 
     const $toggleMenuCheckBox = $('#menu-check-box')[0];
     $toggleMenuCheckBox.addEventListener('input', () => {
@@ -70,13 +70,12 @@ function initGallery(el) {
                     }).join(' ')}
                 </h2>
                 <div data-slider-title="${key}" class="slider">
-                    
                 </div>
             </div>`;
     }).join('');
 
     el.querySelectorAll('.slider').forEach(item => {
-        loadVideos(item,document.body.clientWidth > turningWidth);
+        loadVideos(item, document.body.clientWidth > turningWidth);
     });
 }
 
@@ -100,12 +99,12 @@ function loadVideos(el, needAllVideo) {
                         </div>`;
             }).join('')}${(videos.length > 3 && !needAllVideo)
             ? '<button class="load-btn video-gallery__btn">load more</button>'
-            : ''}}`;
+            : ''}`;
     }
 }
 
-function initSlider(selector) {
-    $(selector).slick({
+function initSlider(el) {
+    el.slick({
         infinite: false,
         mobileFirst: true,
         nextArrow: '<bitton type="button" class="slider-arrow slick-next"></bitton>',
@@ -139,20 +138,34 @@ function initSlider(selector) {
     });
 }
 
-function removeSlider(selector) {
-    $(selector).slick('unslick');
+function removeSlider(el) {
+    el.slick('unslick');
 }
 
 const handlerDecreaseWindow = debounce(() => {
     if (document.body.clientWidth <= turningWidth) {
-        removeSlider('.slider');
+        const sliders = $('.slider');
+        removeSlider(sliders);
+
+        [].forEach.call(sliders, (item) => {
+            loadVideos(item, false);
+        });
+
         window.removeEventListener('resize', handlerDecreaseWindow);
         window.addEventListener('resize', handlerIncreaseWindow);
     }
 }, 500);
+
 const handlerIncreaseWindow = debounce(() => {
     if (document.body.clientWidth > turningWidth) {
-        initSlider('.slider');
+        const sliders = $('.slider');
+
+        [].forEach.call(sliders, (item) => {
+            loadVideos(item, true);
+        });
+
+        initSlider(sliders);
+
         window.removeEventListener('resize', handlerIncreaseWindow);
         window.addEventListener('resize', handlerDecreaseWindow);
     }

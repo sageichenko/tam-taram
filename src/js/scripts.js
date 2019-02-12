@@ -57,7 +57,11 @@ document.addEventListener('DOMContentLoaded', function () {
 function loadMore(ev) {
     const target = ev.target;
     if (target.classList.contains('load-btn')) {
-        loadVideos(target.closest('.slider'), true);
+        const slider = target.closest('.slider');
+
+        slider.classList.add('_open');
+
+        loadVideos(slider);
     }
 }
 
@@ -75,19 +79,21 @@ function initGallery(el) {
     }).join('');
 
     el.querySelectorAll('.slider').forEach(item => {
-        loadVideos(item, document.body.clientWidth > turningWidth);
+        loadVideos(item);
     });
 }
 
-function loadVideos(el, needAllVideo) {
+function loadVideos(el) {
     let videos;
+    const needAllVideo = el.classList.contains('_open') || $(document).width() > turningWidth;
+
     for (const key of Object.keys(videosData)) {
         if (key === el.dataset.sliderTitle)
             videos = videosData[key].videoIDs;
     }
 
     if (videos) {
-        el.innerHTML = `${((videos.length > 3 && !needAllVideo) ? videos.slice(0, 3) : videos)
+        el.innerHTML = `${((videos.length > 3 && needAllVideo) ? videos : videos.slice(0, 3))
             .map((id) => {
                 return `<div class="video-box slider__item">
                             <a data-fancybox href="https://youtu.be/${id}">

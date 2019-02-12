@@ -38,7 +38,8 @@ body {
 
 /*  GRID  */
 .row {
-    margin: @offset-vertical-small 0;
+    margin: @offset-vertical-small 0 @offset-vertical;
+    
 
     @media @tablet {
         margin: 0 auto;
@@ -107,6 +108,7 @@ body {
     }
 
     @media @desktop {
+        padding: 2rem 4rem 1.5rem;
         font-size: 1.1rem;
     }
 
@@ -199,6 +201,7 @@ body {
     }
 
     @media @desktop {
+        padding: 0 4rem;
         height: 6rem;
     }
 
@@ -488,9 +491,9 @@ body {
         text-align: left;
     }
 
-    &__btn {
-        margin: 0 0 6rem;
-    }
+    //&__btn {
+    //    margin: 0 0 6rem;
+    //}
     @media @tablet {
         padding: 0 2rem;
     }

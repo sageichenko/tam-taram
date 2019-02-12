@@ -31,18 +31,19 @@ const videosData = {
     }
 };
 
-document.addEventListener('DOMContentLoaded', function () {
-    const gallery = $('#gallery')[0];
+$(document).ready(function () {
+    const $gallery = $('#gallery');
 
-    initGallery(gallery);
-    gallery.addEventListener('click', loadMore);
+    initGallery($gallery);
+    $gallery.click(loadMore);
 
-    $(window).on('resize', handlerResizeWindow);
+    $(window).resize(handlerResizeWindow);
     $(window).trigger('resize');
 
-    const $toggleMenuCheckBox = $('#menu-check-box')[0];
-    $toggleMenuCheckBox.addEventListener('input', () => {
-        if ($toggleMenuCheckBox.checked) {
+    const $toggleMenuCheckBox = $('#menu-check-box');
+
+    $toggleMenuCheckBox.change(() => {
+        if ($toggleMenuCheckBox.is(':checked')) {
             openMenu();
             return;
         }
@@ -53,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 function loadMore(ev) {
     const target = ev.target;
+
     if (target.classList.contains('load-btn')) {
         const slider = target.closest('.slider');
 
@@ -62,31 +64,36 @@ function loadMore(ev) {
     }
 }
 
-function initGallery(el) {
-    el.innerHTML = Object.keys(videosData).map((key) => {
-        return `<div class="row">
+function initGallery($element) {
+    $element.html(
+        Object
+            .keys(videosData)
+            .map((key) => {
+                return `<div class="row">
                 <h2 class="heading-secondary video-gallery__heading">
                     ${key.split(' ').map((word) => {
-            return `<span>${word}</span>`;
-        }).join(' ')}
+                        return `<span>${word}</span>`;
+                    }).join(' ')}
                 </h2>
                 <div data-slider-title="${key}" class="slider">
                 </div>
             </div>`;
-    }).join('');
+            }).join('')
+    );
 }
 
-function loadVideos(el) {
+function loadVideos(element) {
+    const $element = $(element);
     let videos;
-    const needAllVideo = el.classList.contains('_open') || $(document).width() > turningWidth;
+    const needAllVideo = $element.hasClass('_open') || $(document).width() > turningWidth;
 
     for (const key of Object.keys(videosData)) {
-        if (key === el.dataset.sliderTitle)
+        if (key === $element.attr('data-slider-title'))
             videos = videosData[key].videoIDs;
     }
 
     if (videos) {
-        el.innerHTML = `${((videos.length > 3 && needAllVideo) ? videos : videos.slice(0, 3))
+        $element.html(`${((videos.length > 3 && needAllVideo) ? videos : videos.slice(0, 3))
             .map((id) => {
                 return `<div class="video-box slider__item">
                             <a data-fancybox href="https://youtu.be/${id}">
@@ -98,13 +105,14 @@ function loadVideos(el) {
                         </div>`;
             }).join('')}${(videos.length > 3 && !needAllVideo)
             ? '<button class="load-btn video-gallery__btn">load more</button>'
-            : ''}`;
+            : ''}`
+        );
     }
 }
 
-function initSlider(el) {
+function initSlider($element) {
     isSliderInit = true;
-    el.slick({
+    $element.slick({
         infinite: false,
         mobileFirst: true,
         nextArrow: '<bitton type="button" class="slider-arrow slick-next"></bitton>',
@@ -138,38 +146,42 @@ function initSlider(el) {
     });
 }
 
-function removeSlider(el) {
-    isSliderInit = false;
-    el.slick('unslick');
+function removeSlider($element) {
+    if (isSliderInit) {
+        isSliderInit = false;
+        $element.slick('unslick');
+    }
 }
 
 const handlerResizeWindow = debounce(() => {
     const $sliders = $('.slider');
 
-    if (document.body.clientWidth > turningWidth && !isSliderInit) {
-        [].forEach.call($sliders, (item) => {
-            loadVideos(item);
-        });
-        initSlider($sliders);
-    } else if (isSliderInit){
-        removeSlider($sliders);
+    if ($(window).width() > turningWidth) {
+        if (!isSliderInit) {
+            [].forEach.call($sliders, (item) => {
+                loadVideos(item);
+            });
+            initSlider($sliders);
+        }
+    } else {
+        if (isSliderInit) {
+            removeSlider($sliders);
+        }
         [].forEach.call($sliders, (item) => {
             loadVideos(item);
         });
     }
-
-
 }, 500);
 
 
 function toggleMenu() {
-    $('#menu')[0].classList.toggle('_hidden');
+    $('#menu').toggleClass('_hidden');
 }
 
 function openMenu() {
-    $('#menu')[0].classList.remove('_hidden');
+    $('#menu').removeClass('_hidden');
 }
 
 function closeMenu() {
-    $('#menu')[0].classList.add('_hidden');
+    $('#menu').addClass('_hidden');
 }

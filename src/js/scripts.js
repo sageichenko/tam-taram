@@ -1,5 +1,6 @@
 import debounce from './modules/debounce.js';
-//const log = console.log;
+
+let isSliderInit = false;
 
 const turningWidth = 425;
 const videosData = {
@@ -36,12 +37,8 @@ document.addEventListener('DOMContentLoaded', function () {
     initGallery(gallery);
     gallery.addEventListener('click', loadMore);
 
-    if (document.body.clientWidth > turningWidth) {
-        window.addEventListener('resize', handlerDecreaseWindow);
-        initSlider($('.slider'));
-    } else {
-        window.addEventListener('resize', handlerIncreaseWindow);
-    }
+    $(window).on('resize', handlerResizeWindow);
+    $(window).trigger('resize');
 
     const $toggleMenuCheckBox = $('#menu-check-box')[0];
     $toggleMenuCheckBox.addEventListener('input', () => {
@@ -70,17 +67,13 @@ function initGallery(el) {
         return `<div class="row">
                 <h2 class="heading-secondary video-gallery__heading">
                     ${key.split(' ').map((word) => {
-                        return `<span>${word}</span>`;
-                    }).join(' ')}
+            return `<span>${word}</span>`;
+        }).join(' ')}
                 </h2>
                 <div data-slider-title="${key}" class="slider">
                 </div>
             </div>`;
     }).join('');
-
-    el.querySelectorAll('.slider').forEach(item => {
-        loadVideos(item);
-    });
 }
 
 function loadVideos(el) {
@@ -110,6 +103,7 @@ function loadVideos(el) {
 }
 
 function initSlider(el) {
+    isSliderInit = true;
     el.slick({
         infinite: false,
         mobileFirst: true,
@@ -145,37 +139,28 @@ function initSlider(el) {
 }
 
 function removeSlider(el) {
+    isSliderInit = false;
     el.slick('unslick');
 }
 
-const handlerDecreaseWindow = debounce(() => {
-    if (document.body.clientWidth <= turningWidth) {
-        const sliders = $('.slider');
-        removeSlider(sliders);
+const handlerResizeWindow = debounce(() => {
+    const $sliders = $('.slider');
 
-        [].forEach.call(sliders, (item) => {
-            loadVideos(item, false);
+    if (document.body.clientWidth > turningWidth && !isSliderInit) {
+        [].forEach.call($sliders, (item) => {
+            loadVideos(item);
         });
-
-        window.removeEventListener('resize', handlerDecreaseWindow);
-        window.addEventListener('resize', handlerIncreaseWindow);
+        initSlider($sliders);
+    } else if (isSliderInit){
+        removeSlider($sliders);
+        [].forEach.call($sliders, (item) => {
+            loadVideos(item);
+        });
     }
+
+
 }, 500);
 
-const handlerIncreaseWindow = debounce(() => {
-    if (document.body.clientWidth > turningWidth) {
-        const sliders = $('.slider');
-
-        [].forEach.call(sliders, (item) => {
-            loadVideos(item, true);
-        });
-
-        initSlider(sliders);
-
-        window.removeEventListener('resize', handlerIncreaseWindow);
-        window.addEventListener('resize', handlerDecreaseWindow);
-    }
-}, 500);
 
 function toggleMenu() {
     $('#menu')[0].classList.toggle('_hidden');
